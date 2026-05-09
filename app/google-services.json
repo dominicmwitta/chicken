@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "516988412476",
+    "project_id": "kuku-d780a",
+    "storage_bucket": "kuku-d780a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516988412476:android:5f7a9cea9cd4e7209f1939",
+        "android_client_info": {
+          "package_name": "com.example.poultryfarmmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq7U15V0nljjO1jqqjwMVXngoh6gxEUh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

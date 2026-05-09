@@ -1,0 +1,25 @@
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Build directories
+build/
+app/build/
+
+# Gradle
+.gradle/
+local.properties
+
+# Android Studio
+*.iml
+.idea/
+.DS_Store
+
+# Sensitive/local
+keystore.properties
+*.jks
+
+# Claude local
+.claude/scheduled_tasks.lock

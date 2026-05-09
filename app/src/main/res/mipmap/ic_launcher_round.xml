@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Background: warm cream -->
+    <path
+        android:fillColor="#FFFDE7"
+        android:pathData="M0,0h108v108h-108z"/>
+
+    <!-- Tail feathers -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M56,56 C64,46 70,38 73,32 C70,42 66,50 60,60 Z"/>
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M56,64 C66,58 72,52 76,46 C70,55 63,63 58,70 Z"/>
+
+    <!-- Chicken body -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M12,68 C12,52 21,48 34,48 C47,48 56,52 56,68 C56,80 49,86 34,86 C19,86 12,80 12,68 Z"/>
+
+    <!-- Chicken head -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M12,37 C12,23 18,18 26,18 C34,18 40,23 40,37 C40,51 34,55 26,55 C18,55 12,51 12,37 Z"/>
+
+    <!-- Comb -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M21,18 C19,9 23,4 26,10 C27,4 31,4 30,10 C33,4 36,9 34,18 Z"/>
+
+    <!-- Beak -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M12,33 L2,37 L12,41 Z"/>
+
+    <!-- Wattle -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M12,41 C6,44 7,51 13,47 Z"/>
+
+    <!-- Eye -->
+    <path
+        android:fillColor="#FFFDE7"
+        android:pathData="M20,35 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"/>
+
+    <!-- Legs -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M26,86 L22,100 L28,100 L30,93 L32,100 L38,100 L34,86 Z"/>
+
+    <!-- Egg outline (black) -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M84,46 C74,46 70,58 70,68 C70,82 76,96 84,96 C92,96 98,82 98,68 C98,58 94,46 84,46 Z"/>
+
+    <!-- Egg fill (white) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M84,49 C75,49 73,60 73,68 C73,81 78,93 84,93 C90,93 95,81 95,68 C95,60 93,49 84,49 Z"/>
+
+</vector>
