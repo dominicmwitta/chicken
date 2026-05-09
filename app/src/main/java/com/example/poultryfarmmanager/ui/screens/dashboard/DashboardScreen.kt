@@ -114,13 +114,8 @@ fun DashboardScreen(
             }
 
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                SectionLabel(s.timeRange)
-                TimeRangeSelector(selectedDays = selectedDays, onSelect = { viewModel.setSelectedDays(it) })
-            }
-
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 SectionLabel(if (selectedDays > 30) s.eggProductionWeekly else s.eggProductionDaily)
-                EggTrendCard(analytics, s)
+                EggTrendCard(analytics, s, selectedDays) { viewModel.setSelectedDays(it) }
             }
 
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -194,27 +189,36 @@ private fun QuickStatChip(label: String, value: String, icon: androidx.compose.u
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun TimeRangeSelector(selectedDays: Int, onSelect: (Int) -> Unit) {
-    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-        RANGE_OPTIONS.forEachIndexed { index, days ->
-            SegmentedButton(selected = selectedDays == days, onClick = { onSelect(days) },
-                shape = SegmentedButtonDefaults.itemShape(index, RANGE_OPTIONS.size),
-                label = { Text("${days}d", style = MaterialTheme.typography.labelMedium) })
-        }
-    }
-}
 
 @Composable
-private fun EggTrendCard(analytics: FarmAnalytics, s: com.example.poultryfarmmanager.ui.theme.AppStrings) {
+private fun EggTrendCard(analytics: FarmAnalytics, s: com.example.poultryfarmmanager.ui.theme.AppStrings, selectedDays: Int, onSelectDays: (Int) -> Unit) {
     val barColor   = MaterialTheme.colorScheme.secondary
     val labelColor = MaterialTheme.colorScheme.onSurfaceVariant
+    var dropdownExpanded by remember { mutableStateOf(false) }
     KukuCard(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Text(s.eggsCollected, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
-                Text("${s.totalPrefix} ${analytics.totalEggs}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("${s.totalPrefix} ${analytics.totalEggs}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    Box {
+                        TextButton(
+                            onClick = { dropdownExpanded = true },
+                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+                        ) {
+                            Text("${selectedDays}d", style = MaterialTheme.typography.labelMedium)
+                            Icon(Icons.Default.ArrowDropDown, null, modifier = Modifier.size(16.dp))
+                        }
+                        DropdownMenu(expanded = dropdownExpanded, onDismissRequest = { dropdownExpanded = false }) {
+                            RANGE_OPTIONS.forEach { days ->
+                                DropdownMenuItem(
+                                    text = { Text("${days}d", style = MaterialTheme.typography.bodyMedium) },
+                                    onClick = { onSelectDays(days); dropdownExpanded = false }
+                                )
+                            }
+                        }
+                    }
+                }
             }
             val dataPoints = analytics.eggTrend
             val maxCount   = dataPoints.maxOfOrNull { it.count }?.takeIf { it > 0 } ?: 1
