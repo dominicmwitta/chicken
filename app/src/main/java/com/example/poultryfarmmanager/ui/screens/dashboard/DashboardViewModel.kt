@@ -102,21 +102,26 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun buildEggTrend(eggs: List<EggProduction>, days: Int, todayStart: Long): List<EggDataPoint> {
+        val monthFmt = SimpleDateFormat("MMM", Locale.getDefault())
         return if (days <= 30) {
-            val fmt = if (days <= 7) SimpleDateFormat("EEE", Locale.getDefault())
-                      else SimpleDateFormat("d", Locale.getDefault())
+            val cal = Calendar.getInstance()
             (days - 1 downTo 0).map { daysBack ->
                 val dayMs = todayStart - daysBack.toLong() * 24 * 60 * 60 * 1000
                 val nextDay = dayMs + 24L * 60 * 60 * 1000
-                EggDataPoint(fmt.format(Date(dayMs)),
-                    eggs.filter { it.date >= dayMs && it.date < nextDay }.sumOf { it.totalEggs })
+                cal.timeInMillis = dayMs
+                val label = when {
+                    days <= 7 -> SimpleDateFormat("EEE", Locale.getDefault()).format(Date(dayMs))
+                    cal.get(Calendar.DAY_OF_MONTH) == 1 -> monthFmt.format(Date(dayMs))
+                    else -> cal.get(Calendar.DAY_OF_MONTH).toString()
+                }
+                EggDataPoint(label, eggs.filter { it.date >= dayMs && it.date < nextDay }.sumOf { it.totalEggs })
             }
         } else {
             val weeks = days / 7
-            (weeks - 1 downTo 0).mapIndexed { _, weeksBack ->
+            (weeks - 1 downTo 0).map { weeksBack ->
                 val weekEnd = todayStart - weeksBack.toLong() * 7 * 24 * 60 * 60 * 1000
                 val weekStart = weekEnd - 7L * 24 * 60 * 60 * 1000
-                EggDataPoint("W${weeks - weeksBack}",
+                EggDataPoint(monthFmt.format(Date(weekStart)),
                     eggs.filter { it.date >= weekStart && it.date < weekEnd }.sumOf { it.totalEggs })
             }
         }
